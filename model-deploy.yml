@@ -2,7 +2,7 @@
   - name: Seldon Core Model Deploy
     hosts: localhost
     tasks:
-    - name: LightGBM 1 Model Deploy
+    - name: LightGBM Model Deploy
       shell: |
         kubectl -n seldon create -f seldon-model/seldon-lightgbm-1.yml
         SELDON_DEPLOYMENT_NAME=$(kubectl get deploy \
@@ -13,15 +13,5 @@
         kubectl rollout status \
           -n seldon \
           deploy/${SELDON_DEPLOYMENT_NAME}
-    - name: LightGBM 2 Model Deploy
-      shell: |
-        kubectl -n seldon create -f seldon-model/seldon-lightgbm-2.yml
-        SELDON_DEPLOYMENT_NAME=$(kubectl get deploy \
-            -n seldon \
-            -l seldon-deployment-id=iris \
-            -o jsonpath='{.items[0].metadata.name}' \
-          )
-        kubectl rollout status \
-          -n seldon \
-          deploy/${SELDON_DEPLOYMENT_NAME}
+
 
